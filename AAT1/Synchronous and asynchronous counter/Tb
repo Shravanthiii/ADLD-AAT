@@ -1,0 +1,27 @@
+`timescale 1ns/1ps
+module synchronous_counter_tb;
+reg clk, reset;
+wire [3:0] Q;
+synchronous_counter dut (.clk(clk), .reset(reset), .Q(Q));
+always #5 clk = ~clk;
+initial begin
+    $monitor("Time=%0t Q=%b", $time, Q);
+    clk = 0; reset = 1; #10;
+    reset = 0; #180;
+    $finish;
+end
+endmodule
+
+`timescale 1ns/1ps
+module asynchronous_counter_tb;
+reg clk, reset;
+wire [3:0] Q;
+asynchronous_counter dut (.clk(clk), .reset(reset), .Q(Q));
+always #5 clk = ~clk;
+initial begin
+    $monitor("Time=%0t Q=%b", $time, Q);
+    clk = 0; reset = 1; #12;
+    reset = 0; #180;
+    $finish;
+end
+endmodule
