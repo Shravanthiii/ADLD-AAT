@@ -1,9 +1,0 @@
-module parity_circuit (
-    input [3:0] data,
-    input received_parity,
-    output generated_parity,
-    output parity_error
-);
-assign generated_parity = ^data;
-assign parity_error = ^{data, received_parity};
-endmodule
