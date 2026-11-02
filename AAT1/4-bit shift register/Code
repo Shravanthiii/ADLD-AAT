@@ -1,0 +1,13 @@
+module shift_register (
+    input clk, reset, serial_in,
+    output serial_out,
+    output reg [3:0] Q
+);
+always @(posedge clk) begin
+    if (reset)
+        Q <= 4'b0000;
+    else
+        Q <= {Q[2:0], serial_in};
+end
+assign serial_out = Q[3];
+endmodule
