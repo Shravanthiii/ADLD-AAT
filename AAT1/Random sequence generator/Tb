@@ -1,0 +1,13 @@
+`timescale 1ns/1ps
+module lfsr_4bit_tb;
+reg clk, reset;
+wire [3:0] Q;
+lfsr_4bit dut (.clk(clk), .reset(reset), .Q(Q));
+always #5 clk = ~clk;
+initial begin
+    $monitor("Time=%0t LFSR=%b", $time, Q);
+    clk = 0; reset = 1; #10;
+    reset = 0; #180;
+    $finish;
+end
+endmodule
