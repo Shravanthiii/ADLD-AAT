@@ -1,0 +1,22 @@
+Testbench
+`timescale 1ns/1ps
+module moore_fsm_tb;
+reg clk, reset, x;
+wire z;
+moore_fsm dut (.clk(clk), .reset(reset), .x(x), .z(z));
+always #5 clk = ~clk;
+initial begin
+    $monitor("Time=%0t Input=%b State=%b Output=%b",
+             $time, x, dut.state, z);
+    clk = 0; reset = 1; x = 0;
+    #10; reset = 0;
+    @(negedge clk); x = 1;
+    @(negedge clk); x = 0;
+    @(negedge clk); x = 1;
+    @(negedge clk); x = 1;
+    @(negedge clk); x = 0;
+    @(negedge clk); x = 1;
+    #10;
+    $finish;
+end
+endmodule
