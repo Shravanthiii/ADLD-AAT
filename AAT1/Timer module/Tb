@@ -1,0 +1,17 @@
+`timescale 1ns/1ps
+module timer_tb;
+reg clk, reset, enable;
+wire done;
+wire [31:0] count;
+timer_module #(.PERIOD(5)) dut (.clk(clk), .reset(reset),
+                               .enable(enable), .done(done), .count(count));
+always #5 clk = ~clk;
+initial begin
+    $monitor("Time=%0t Count=%d Done=%b", $time, count, done);
+    clk = 0; reset = 1; enable = 0;
+    #10;
+    reset = 0; enable = 1;
+    #100;
+    $finish;
+end
+endmodule
